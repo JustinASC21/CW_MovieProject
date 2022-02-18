@@ -19,7 +19,7 @@ public class Movie
                  String keywords, String overview, int runtime, String genres,
                  double userRating, int year, int revenue)
     {
-        this.title = "\u001B[34m" + title + "\u001B[37m" ;
+        this.title = "\u001B[34m" + title + "\u001B[0m" ;
         this.cast = cast;
         this.director = director;
         this.tagline = tagline;
