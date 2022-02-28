@@ -3,6 +3,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -374,9 +375,32 @@ public class MovieCollection
         exitToMenu();
     }
 
-    private void listHighestRevenue()
-    {
+    private void listHighestRevenue() {
+        for (int x = 0; x < movies.size(); x++) {
+            int maxInd = x;
+            for (int y = x + 1; y < movies.size(); y++) {
+                if (movies.get(y).getRevenue() > movies.get(maxInd).getRevenue()) {
+                    maxInd = y;
+                }
+            }
+            Movie temp = movies.get(x);
+            movies.set(x, movies.get(maxInd));
+            movies.set(maxInd, temp);
+        }
+        int ct = 1;
+        for (Movie m : movies) {
+            if (ct == 51) {
+                break;
+            }
+            System.out.println(ct + ". " + m.getTitle() + ": " + m.getRevenue());
+            ct++;
+        }
+        System.out.println("Select a movie to learn more about");
+        System.out.print("Enter number: ");
 
+        int movieInp = scanner.nextInt();
+        displayMovieInfo(movies.get(movieInp - 1));
+        exitToMenu();
     }
 
     private void importMovieList(String fileName)
@@ -392,21 +416,38 @@ public class MovieCollection
             while ((line = bufferedReader.readLine()) != null)
             {
                 String[] movieFromCSV = line.split(",");
+                System.out.println(Arrays.toString(movieFromCSV));
+                if (movieFromCSV.length >= 19) {
+                    String title = movieFromCSV[5];
+                    String cast = movieFromCSV[6];
+                    String director = movieFromCSV[8];
+                    String tagline = movieFromCSV[9];
+                    String keywords = movieFromCSV[10];
+                    String overview = movieFromCSV[11];
+                    int runtime = Integer.parseInt(movieFromCSV[12]);
+                    String genres = movieFromCSV[13];
+                    double userRating = Double.parseDouble(movieFromCSV[17]);
+                    int year = Integer.parseInt(movieFromCSV[18]);
+                    int revenue = Integer.parseInt(movieFromCSV[4]);
 
-                String title = movieFromCSV[0];
-                String cast = movieFromCSV[1];
-                String director = movieFromCSV[2];
-                String tagline = movieFromCSV[3];
-                String keywords = movieFromCSV[4];
-                String overview = movieFromCSV[5];
-                int runtime = Integer.parseInt(movieFromCSV[6]);
-                String genres = movieFromCSV[7];
-                double userRating = Double.parseDouble(movieFromCSV[8]);
-                int year = Integer.parseInt(movieFromCSV[9]);
-                int revenue = Integer.parseInt(movieFromCSV[10]);
+                    // original parsing
+                    /*
+                     String title = movieFromCSV[0];
+                    String cast = movieFromCSV[1];
+                    String director = movieFromCSV[2];
+                    String tagline = movieFromCSV[3];
+                    String keywords = movieFromCSV[4];
+                    String overview = movieFromCSV[5];
+                    int runtime = Integer.parseInt(movieFromCSV[6]);
+                    String genres = movieFromCSV[7];
+                    double userRating = Double.parseDouble(movieFromCSV[8]);
+                    int year = Integer.parseInt(movieFromCSV[9]);
+                    int revenue = Integer.parseInt(movieFromCSV[10]);
+                     */
+                    Movie nextMovie = new Movie(title, cast, director, tagline, keywords, "overview", runtime, genres, userRating, year, revenue);
+                    movies.add(nextMovie);
+                }
 
-                Movie nextMovie = new Movie(title, cast, director, tagline, keywords, overview, runtime, genres, userRating, year, revenue);
-                movies.add(nextMovie);
             }
             bufferedReader.close();
         }
