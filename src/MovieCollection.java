@@ -416,22 +416,10 @@ public class MovieCollection
             while ((line = bufferedReader.readLine()) != null)
             {
                 String[] movieFromCSV = line.split(",");
-                System.out.println(Arrays.toString(movieFromCSV));
-                if (movieFromCSV.length >= 19) {
-                    String title = movieFromCSV[5];
-                    String cast = movieFromCSV[6];
-                    String director = movieFromCSV[8];
-                    String tagline = movieFromCSV[9];
-                    String keywords = movieFromCSV[10];
-                    String overview = movieFromCSV[11];
-                    int runtime = Integer.parseInt(movieFromCSV[12]);
-                    String genres = movieFromCSV[13];
-                    double userRating = Double.parseDouble(movieFromCSV[17]);
-                    int year = Integer.parseInt(movieFromCSV[18]);
-                    int revenue = Integer.parseInt(movieFromCSV[4]);
+
 
                     // original parsing
-                    /*
+
                      String title = movieFromCSV[0];
                     String cast = movieFromCSV[1];
                     String director = movieFromCSV[2];
@@ -443,10 +431,9 @@ public class MovieCollection
                     double userRating = Double.parseDouble(movieFromCSV[8]);
                     int year = Integer.parseInt(movieFromCSV[9]);
                     int revenue = Integer.parseInt(movieFromCSV[10]);
-                     */
                     Movie nextMovie = new Movie(title, cast, director, tagline, keywords, "overview", runtime, genres, userRating, year, revenue);
                     movies.add(nextMovie);
-                }
+
 
             }
             bufferedReader.close();
